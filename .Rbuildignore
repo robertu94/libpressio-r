@@ -1,0 +1,6 @@
+.gitignore
+..Rcheck
+.git
+src/*.o
+src/*.so
+^src/Makevars$

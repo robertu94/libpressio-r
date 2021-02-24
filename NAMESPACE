@@ -1,0 +1,3 @@
+useDynLib(libpressio, .registration=TRUE)
+exportPattern("^[[:alpha:]]+")
+importFrom(Rcpp, evalCpp)
