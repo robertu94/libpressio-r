@@ -6,7 +6,6 @@ autom4te.cache/
 config.log
 config.status
 libpressio_*.tar.gz
-configure
 src/Makevars
 src/*.so
 src/*.o
