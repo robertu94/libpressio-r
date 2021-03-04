@@ -10,3 +10,4 @@ Description: A R wrapper for the libpressio C library.
 License: GPL (>= 2)
 Imports: Rcpp (>= 1.0.6)
 LinkingTo: Rcpp
+SystemRequirements: C++17
