@@ -237,8 +237,7 @@ data_xptr data_new_owning(int dtype, std::vector<int> dims) {
 
 // [[Rcpp::export]]
 data_xptr io_data_path_read(data_xptr& dims, std::string const& filepath) {
-  pressio_data* cloned = new pressio_data(std::move(*dims));
-  return data_xptr(pressio_io_data_path_read(cloned, filepath.c_str()), true);
+  return data_xptr(pressio_io_data_path_read(dims, filepath.c_str()), true);
 }
 
 // [[Rcpp::export]]

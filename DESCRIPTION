@@ -1,7 +1,7 @@
 Package: libpressio
 Type: Package
 Title: Generic Abstraction for Compression
-Version: 1.0
+Version: 1.1
 Date: 2021-02-24
 Author: Robert Underwood
 Maintainer: Robert Underwood <robertu@g.clemson.edu>
