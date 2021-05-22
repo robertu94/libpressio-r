@@ -106,6 +106,11 @@ options_xptr compressor_get_options(compressor_xptr const& compressor) {
 
 
 // [[Rcpp::export]]
+options_xptr compressor_get_documentation(compressor_xptr const& compressor) {
+  return options_xptr(new pressio_options(compressor->plugin->get_documentation()), true);
+}
+
+// [[Rcpp::export]]
 options_xptr compressor_get_configuration(compressor_xptr const& compressor) {
   return options_xptr(new pressio_options(compressor->plugin->get_configuration()), true);
 }

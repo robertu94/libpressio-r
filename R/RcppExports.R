@@ -25,6 +25,10 @@ compressor_get_options <- function(compressor) {
     .Call(`_libpressio_compressor_get_options`, compressor)
 }
 
+compressor_get_documentation <- function(compressor) {
+    .Call(`_libpressio_compressor_get_documentation`, compressor)
+}
+
 compressor_get_configuration <- function(compressor) {
     .Call(`_libpressio_compressor_get_configuration`, compressor)
 }

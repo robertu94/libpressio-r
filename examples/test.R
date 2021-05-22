@@ -1,8 +1,6 @@
 #!/usr/bin/env Rscript
 library(libpressio)
-library(RColorBrewer)
 
-cmap <- rev(colorRampPalette(brewer.pal(10, "RdBu"))(1024))
 
 #get a compressor handle
 lib <- libpressio::get_instance()
@@ -17,6 +15,10 @@ sz_opts_R$`sz:metric` <- "error_stat"
 sz_opts <- libpressio::options_from_R_typed(sz_opts_R, sz_opts)
 libpressio::compressor_set_options(sz, sz_opts)
 
+sz_docs <- libpressio::compressor_get_documentation(sz)
+sz_docs_R <- libpressio::options_to_R(sz_docs)
+print(sz_docs_R)
+
 #load the data
 input <- libpressio::io_data_path_read(
               libpressio::data_new_empty(libpressio::DType.float, c(500, 500, 100)),
@@ -27,7 +29,7 @@ decompressed <- libpressio::data_new_clone(input)
 
 input_r <- libpressio::data_to_R(input)
 png(filename="/tmp/uncompressed.png")
-image(input_r[,,50], col=cmap, useRaster=TRUE, axes=FALSE)
+image(input_r[,,50], useRaster=TRUE, axes=FALSE)
 
 #run the compressors
 libpressio::compressor_compress(sz, input, compressed)
@@ -40,4 +42,4 @@ print(metrics)
 #retrieve the decompressed data
 decompressed_r <- libpressio::data_to_R(decompressed)
 png(filename="/tmp/decompressed.png")
-image(decompressed_r[,,50], col=cmap, useRaster=TRUE, axes=FALSE)
+image(decompressed_r[,,50], useRaster=TRUE, axes=FALSE)

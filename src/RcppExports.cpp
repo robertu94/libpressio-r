@@ -75,6 +75,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// compressor_get_documentation
+options_xptr compressor_get_documentation(compressor_xptr const& compressor);
+RcppExport SEXP _libpressio_compressor_get_documentation(SEXP compressorSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< compressor_xptr const& >::type compressor(compressorSEXP);
+    rcpp_result_gen = Rcpp::wrap(compressor_get_documentation(compressor));
+    return rcpp_result_gen;
+END_RCPP
+}
 // compressor_get_configuration
 options_xptr compressor_get_configuration(compressor_xptr const& compressor);
 RcppExport SEXP _libpressio_compressor_get_configuration(SEXP compressorSEXP) {
@@ -352,6 +363,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_libpressio_compressor_compress", (DL_FUNC) &_libpressio_compressor_compress, 3},
     {"_libpressio_compressor_decompress", (DL_FUNC) &_libpressio_compressor_decompress, 3},
     {"_libpressio_compressor_get_options", (DL_FUNC) &_libpressio_compressor_get_options, 1},
+    {"_libpressio_compressor_get_documentation", (DL_FUNC) &_libpressio_compressor_get_documentation, 1},
     {"_libpressio_compressor_get_configuration", (DL_FUNC) &_libpressio_compressor_get_configuration, 1},
     {"_libpressio_compressor_get_metrics_results", (DL_FUNC) &_libpressio_compressor_get_metrics_results, 1},
     {"_libpressio_compressor_set_options", (DL_FUNC) &_libpressio_compressor_set_options, 2},
