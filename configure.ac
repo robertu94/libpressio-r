@@ -14,6 +14,6 @@ CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
 AC_LANG(C++)
 
 
-PKG_CHECK_MODULES([LibPressio], [libpressio])
+PKG_CHECK_MODULES([LibPressio], [libpressio_cxx])
 AC_CONFIG_FILES([src/Makevars])
 AC_OUTPUT
