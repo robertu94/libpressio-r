@@ -1,3 +1,5 @@
+CXX=/usr/bin/g++
+CC=/usr/bin/gcc
 VERSION=$(shell awk -F": " '/Version/ {print $$2 }' DESCRIPTION )
 all: clean
 	+R -e "library(Rcpp); Rcpp::compileAttributes(verbose=TRUE);"

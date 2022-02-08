@@ -380,6 +380,9 @@ Rcpp::List options_to_R(options_xptr& ptr) {
         continue;
     }
     switch(i.second.type()) {
+      case pressio_option_bool_type:
+        ret.push_back(bool(i.second.get_value<bool>()), i.first);
+        break;
       case pressio_option_int8_type:
         ret.push_back(int32_t(i.second.get_value<int8_t>()), i.first);
         break;
