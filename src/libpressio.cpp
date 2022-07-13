@@ -319,6 +319,7 @@ pressio_option option_from_R_impl(Rcpp::RObject const& obj) {
 }
 options_xptr options_from_R_impl(Rcpp::List const& l, pressio_options const* option_types) {
   pressio_options config = (option_types == nullptr)? pressio_options{} : *option_types ;
+  pressio_options result;
 
   auto names = Rcpp::as<std::vector<std::string>>(l.names());
   for (auto const& name : names) {
@@ -327,24 +328,27 @@ options_xptr options_from_R_impl(Rcpp::List const& l, pressio_options const* opt
       pressio_option option = option_from_R_impl(entry);
       if(not option.has_value()) continue;
       if(option_types != nullptr) {
-        auto status = config.cast_set(name, option, pressio_conversion_special);
-        switch(status) {
-          case pressio_options_key_set:
-            break;
-          case pressio_options_key_exists:
-            throw std::runtime_error("invalid type ");
-          case pressio_options_key_does_not_exist:
-            throw std::runtime_error("does not exist ");
+        auto status = config.key_status(name);
+        if(status == pressio_options_key_set || status == pressio_options_key_exists) {
+          result.set(name, config.get(name));
+          auto cast_status = result.cast_set(name, option, pressio_conversion_special);
+          switch(cast_status) {
+            case pressio_options_key_set:
+              break;
+            case pressio_options_key_exists:
+              throw std::runtime_error("invalid type ");
+            case pressio_options_key_does_not_exist:
+              throw std::runtime_error("does not exist ");
+          }
         }
       } else {
-        config.set(name, option);
+        result.set(name, option);
       }
     } catch(std::runtime_error const& ex) {
       throw std::runtime_error(ex.what() + name);
     }
   }
-
-  return options_xptr(new pressio_options(std::move(config)), true);
+  return options_xptr(new pressio_options(std::move(result)), true);
 }
 
 // [[Rcpp::export]]
