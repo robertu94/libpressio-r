@@ -9,6 +9,13 @@
 #include <string>
 #include <iterator>
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#ifdef HAVE_LIBPRESSIO_META
+#include "libpressio_meta.h"
+#endif
+#endif
+
 void valid_dtype(int type) {
   static const pressio_dtype types[] = {
     pressio_double_dtype,
@@ -60,6 +67,10 @@ std::vector<std::string> split(std::string const& supported) {
 
 // [[Rcpp::export]]
 library_xptr get_instance() {
+#ifdef HAVE_LIBPRESSIO_META
+  libpressio_register_all();
+#endif
+
   return library_xptr(pressio_instance(), true);
 }
 

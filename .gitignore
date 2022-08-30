@@ -11,5 +11,5 @@ src/*.so
 src/*.o
 src/symbols.rds
 inst
-
-
+config.h
+configure~

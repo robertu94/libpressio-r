@@ -1,2 +1,3 @@
-PKG_CPPFLAGS=@LibPressio_CFLAGS@
-PKG_LIBS=@LibPressio_LIBS@
+PKG_CPPFLAGS=@LibPressio_CFLAGS@ @LibPressioMeta_CFLAGS@ @DEFS@ -I..
+PKG_LIBS=@LibPressio_LIBS@ @LibPressioMeta_LIBS@
+
