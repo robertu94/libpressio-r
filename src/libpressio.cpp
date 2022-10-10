@@ -29,6 +29,7 @@ void valid_dtype(int type) {
     pressio_int32_dtype,
     pressio_int64_dtype,
     pressio_byte_dtype,
+    pressio_bool_dtype,
   };
 
   if(std::find(std::begin(types), std::end(types), type) == std::end(types)) {
@@ -55,6 +56,16 @@ class PressioOptionType{
     pressio_option_type getType() const { return t; }
   private:
     pressio_option_type t;
+};
+
+//required dummy class used by the enum for pressio_option_types
+class PressioThreadSafety{
+  public:
+    PressioThreadSafety(){}
+    void setType(pressio_thread_safety t) { this->t = t; }
+    pressio_thread_safety getType() const { return t; }
+  private:
+    pressio_thread_safety t;
 };
 
 std::vector<std::string> split(std::string const& supported) {
@@ -455,6 +466,12 @@ Rcpp::List options_to_R(options_xptr& ptr) {
       case pressio_option_userptr_type:
         //silently ignore these values
         continue;
+      case pressio_option_dtype_type:
+        ret.push_back((int)i.second.get_value<pressio_dtype>(), i.first);
+        break;
+      case pressio_option_threadsafety_type:
+        ret.push_back((int)i.second.get_value<pressio_thread_safety>(), i.first);
+        break;
       case pressio_option_unset_type:
         throw std::runtime_error("failed to convert option: " + i.first);
         //throw std::runtime_error("failed to convert option: " + i.first);
@@ -488,6 +505,10 @@ RCPP_MODULE(pressio) {
     .constructor()
     .property("type", &PressioType::getType, &PressioType::setType)
     ;
+  Rcpp::class_<PressioThreadSafety>("ThreadSafety")
+    .constructor()
+    .property("type", &PressioThreadSafety::getType, &PressioThreadSafety::setType)
+    ;
   Rcpp::enum_<pressio_option_type, PressioOptionType>("OptionTypeEnum")
     .value("int8t", pressio_option_int8_type)
     .value("int16t", pressio_option_int16_type)
@@ -500,6 +521,8 @@ RCPP_MODULE(pressio) {
     .value("float", pressio_option_float_type)
     .value("double", pressio_option_double_type)
     .value("data", pressio_option_data_type)
+    .value("dtype", pressio_option_dtype_type)
+    .value("threadsafety", pressio_option_threadsafety_type)
     .value("string", pressio_option_charptr_type)
     .value("strings", pressio_option_charptr_array_type) .value("userptr", pressio_option_userptr_type)
     .value("unset", pressio_option_unset_type)
@@ -516,6 +539,12 @@ RCPP_MODULE(pressio) {
     .value("float", pressio_float_dtype)
     .value("double", pressio_double_dtype)
     .value("byte", pressio_byte_dtype)
+    .value("bool", pressio_bool_dtype)
+    ;
+  Rcpp::enum_<pressio_thread_safety, PressioThreadSafety>("ThreadSafetyEnum")
+    .value("single", pressio_thread_safety_single)
+    .value("serialized", pressio_thread_safety_serialized)
+    .value("multiple", pressio_thread_safety_multiple)
     ;
 
 }

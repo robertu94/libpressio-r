@@ -8,6 +8,7 @@
 // [[Rcpp::plugins("cpp11")]]
 
 RCPP_EXPOSED_CLASS_NODECL(pressio_dtype);
+RCPP_EXPOSED_CLASS_NODECL(pressio_thread_safety);
 RCPP_EXPOSED_CLASS_NODECL(pressio_option_type);
 
 using options_xptr = Rcpp::XPtr<pressio_options, Rcpp::PreserveStorage, pressio_options_free, true>;
